@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <!--            TODO Add Margin Top to be reduced when visible again-->
+    <Switch
+        android:id="@+id/switch1"
+        android:textSize="20dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Switch to Scientific"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="20dp"/>
+
+    <GridLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="80dp"
+        android:columnCount="4"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/edit1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_columnSpan="4"
+            android:layout_gravity="right"
+            android:gravity="right"
+            android:maxLines="6"
+            android:padding="8dp"
+            android:text=""
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/edit2"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_columnSpan="4"
+            android:layout_gravity="right"
+            android:gravity="right"
+            android:maxLines="6"
+            android:padding="8dp"
+            android:text=""
+            android:textSize="20dp" />
+
+
+        <Button
+            android:id="@+id/btnVal1"
+            android:onClick="onClick1"
+            android:text="1" />
+
+        <Button
+            android:onClick="onClick2"
+            android:text="2" />
+
+        <Button android:text="3" />
+
+        <Button
+            android:onClick="onMultiply"
+            android:text="*" />
+
+        <Button android:text="4" />
+
+        <Button android:text="5" />
+
+        <Button android:text="6" />
+
+        <Button
+            android:onClick="onSubtract"
+            android:text="-" />
+
+        <Button android:text="7" />
+
+        <Button android:text="8" />
+
+        <Button android:text="9" />
+
+        <Button
+            android:layout_column="3"
+            android:onClick="onDivide"
+            android:text="/" />
+
+
+        <Button
+            android:id="@+id/add"
+            android:layout_rowSpan="4"
+            android:layout_column="3"
+            android:layout_gravity="fill"
+            android:onClick="onAdd"
+            android:text="+" />
+
+
+        <Button
+            android:layout_columnSpan="2"
+            android:layout_gravity="fill"
+            android:text="0" />
+
+        <Button
+            android:onClick="onClear"
+            android:text="C" />
+
+
+        <Button
+            android:onClick="onClickOpeningBrace"
+            android:text="(" />
+
+        <Button
+            android:onClick="onClickClosingBrace"
+            android:text=")" />
+
+        <Button
+            android:onClick="onBackSpace"
+            android:text="⌫" />
+
+        <Button
+            android:layout_columnSpan="3"
+            android:layout_gravity="fill"
+            android:onClick="onEquals"
+            android:text="=" />
+
+        <!--    <LinearLayout-->
+        <!--        android:layout_width="80dp"-->
+        <!--        android:layout_height="50dp"-->
+        <!--        android:layout_gravity="center"-->
+        <!--        android:orientation="horizontal"-->
+        <!--        >-->
+        <!--        <Button-->
+        <!--            android:height="10dp"-->
+        <!--            android:layout_height="match_parent"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:onClick="onClickClosingBrace"-->
+        <!--            android:text="log" />-->
+
+        <!--        <Button-->
+        <!--            android:height="10dp"-->
+        <!--            android:layout_height="match_parent"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:text="sin" />-->
+        <!--        <Button-->
+        <!--            android:height="10dp"-->
+        <!--            android:layout_height="match_parent"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:text="sqrt" />-->
+
+        <!--    </LinearLayout>-->
+        <!--    <GridLayout-->
+        <!--        android:alignmentMode="alignBounds"-->
+        <!--        android:layout_width="match_parent"-->
+        <!--        android:layout_height="match_parent"-->
+        <!--        android:layout_gravity="center"-->
+        <!--        android:columnCount="2"-->
+        <!--        android:orientation="horizontal">-->
+        <!--        <Button android:text="log">-->
+
+        <!--        </Button>-->
+        <!--        <Button android:text="sin">-->
+
+        <!--        </Button>-->
+        <!--    </GridLayout>-->
+
+    </GridLayout>
+
+    <GridLayout
+            android:visibility="gone"
+            android:alignmentMode="alignMargins"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:columnCount="4"
+            android:orientation="horizontal"
+            android:layout_marginLeft="20dp"
+            xmlns:android="http://schemas.android.com/apk/res/android">
+            <Button android:text="log">
+
+            </Button>
+            <Button android:text="sin"></Button>
+            <Button android:text="sqrt"></Button>
+            <Button android:text="x^2"></Button>
+
+
+        </GridLayout>
+
+
+</LinearLayout>
