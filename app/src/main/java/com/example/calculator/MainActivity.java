@@ -5,6 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.GridLayout;
+import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import java.util.Stack;
@@ -85,14 +88,30 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onBackSpace(View view) {
-        numberString = numberString.substring(0, numberString.length() - 1);
+        if (numberString.length() > 0)
+            numberString = numberString.substring(0, numberString.length() - 1);
         edit1.setText(numberString);
     }
 
 
-    // TODO add scientific toggle button
-    // TODO Reduce the margin of the GridLayout
-    // TODO Make GridLayout 2 visible
+    public void onToggleScientific(View view) {
+        Switch scientificToggleSwitch = findViewById(R.id.scientific_switch);
+        Boolean switchState = scientificToggleSwitch.isChecked();
+        GridLayout gridLayout2 = findViewById(R.id.grid_layout2);
+        GridLayout gridLayout1 = findViewById(R.id.grid_layout1);
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) gridLayout1.getLayoutParams();
+
+        if (switchState) {
+            gridLayout2.setVisibility(View.VISIBLE);
+            params.topMargin = 50;
+            gridLayout1.setLayoutParams(params);
+        } else {
+            gridLayout2.setVisibility(View.GONE);
+            params.topMargin = 80;
+            gridLayout1.setLayoutParams(params);
+
+        }
+    }
 
 
     @Override
