@@ -9,17 +9,19 @@
 
     <!--            TODO Add Margin Top to be reduced when visible again-->
     <Switch
-        android:id="@+id/switch1"
-        android:textSize="20dp"
-        android:paddingTop="20dp"
-        android:paddingBottom="20dp"
+        android:id="@+id/scientific_switch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Switch to Scientific"
         android:layout_marginLeft="40dp"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="20dp"
+        android:onClick="onToggleScientific"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        android:text="Switch to Scientific"
+        android:textSize="20dp" />
 
     <GridLayout
+        android:id="@+id/grid_layout1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -62,27 +64,41 @@
             android:onClick="onClick2"
             android:text="2" />
 
-        <Button android:text="3" />
+        <Button
+            android:onClick="onClick3"
+            android:text="3" />
 
         <Button
             android:onClick="onMultiply"
             android:text="*" />
 
-        <Button android:text="4" />
+        <Button
+            android:onClick="onClick4"
+            android:text="4" />
 
-        <Button android:text="5" />
+        <Button
+            android:onClick="onClick5"
+            android:text="5" />
 
-        <Button android:text="6" />
+        <Button
+            android:onClick="onClick6"
+            android:text="6" />
 
         <Button
             android:onClick="onSubtract"
             android:text="-" />
 
-        <Button android:text="7" />
+        <Button
+            android:onClick="onClick7"
+            android:text="7" />
 
-        <Button android:text="8" />
+        <Button
+            android:onClick="onClick8"
+            android:text="8" />
 
-        <Button android:text="9" />
+        <Button
+            android:onClick="onClick9"
+            android:text="9" />
 
         <Button
             android:layout_column="3"
@@ -102,6 +118,7 @@
         <Button
             android:layout_columnSpan="2"
             android:layout_gravity="fill"
+            android:onClick="onClick0"
             android:text="0" />
 
         <Button
@@ -170,6 +187,7 @@
     </GridLayout>
 
     <GridLayout
+        android:id="@+id/grid_layout2"
             android:visibility="gone"
             android:alignmentMode="alignMargins"
             android:layout_width="match_parent"
@@ -177,14 +195,25 @@
             android:layout_gravity="center"
             android:columnCount="4"
             android:orientation="horizontal"
-            android:layout_marginLeft="20dp"
-            xmlns:android="http://schemas.android.com/apk/res/android">
-            <Button android:text="log">
+            android:layout_marginLeft="20dp">
 
-            </Button>
-            <Button android:text="sin"></Button>
-            <Button android:text="sqrt"></Button>
-            <Button android:text="x^2"></Button>
+        <Button
+            android:onClick="onLog"
+            android:text="log">
+
+        </Button>
+
+        <Button
+            android:onClick="onSin"
+            android:text="sin"></Button>
+
+        <Button
+            android:onClick="onSqrt"
+            android:text="sqrt"></Button>
+
+        <Button
+            android:onClick="onSquare"
+            android:text="x^2"></Button>
 
 
         </GridLayout>
