@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Stack;
 
@@ -77,6 +78,12 @@ public class MainActivity extends AppCompatActivity {
         edit1.setText(numberString);
     }
 
+    public void onDot(View view) {
+        edit1 = findViewById(R.id.edit1);
+        numberString = numberString + ".";
+        edit1.setText(numberString);
+    }
+
 
 
     public void onClickOpeningBrace(View view) {
@@ -129,11 +136,25 @@ public class MainActivity extends AppCompatActivity {
 
     /*SCIENTIFIC CALCULATIONS*/
 
+
+    public String convertToFraction(double decimal){
+        int digitsAfterPoint = String.valueOf(decimal).length() - String.valueOf(decimal).indexOf('.')+1; // get the count of digits after the point // for example 0.75 has two digits
+        BigInteger numerator  = BigInteger.valueOf((long)(decimal*Math.pow(10, digitsAfterPoint))); // multiply 0.75 with 10^2 to get 75
+        BigInteger denominator = BigInteger.valueOf((long)(Math.pow(10, digitsAfterPoint)));       // 10^2 is your denominator
+        int gcd = numerator.gcd(denominator).intValue();                                           // calculate the greatest common divisor of numerator  and denominator
+        if (gcd > 1 ){                                                                             // gcd(75,100) = 25
+            return String.valueOf(numerator.intValue()/gcd) +" / "  + String.valueOf(denominator.intValue()/gcd);  // return 75/25 / 100/25 = 3/4
+        }
+        else{
+            return String.valueOf(numerator) +" / "  + String.valueOf(denominator);              // if gcd = 1 which means nothing to simplify just return numerator / denominator
+        }
+    }
+
     private HashMap<String, String> checkScientificFunctions(String string) {
         boolean isLogFound = string.indexOf("log( ") != -1 ? true: false;
         boolean isSinFound = string.indexOf("sin( ") != -1 ? true: false;
         boolean isSqrtFound = string.indexOf("sqrt( ") != -1 ? true: false;
-        boolean isSqrFound = string.indexOf("sqr( ") != -1 ? true: false;
+        boolean isFrFound = string.indexOf("fr( ") != -1 ? true: false;
 
         if (isLogFound) {
             Log.i("In substring of chS", "info");
@@ -156,10 +177,10 @@ public class MainActivity extends AppCompatActivity {
             return hashMap;
         }
 
-        if (isSqrFound) {
+        if (isFrFound) {
             Log.i("In substring of chS", "info");
             HashMap<String, String> hashMap = new HashMap<>();
-            hashMap.put("sqr", string.substring(string.indexOf("sqr") + 3, string.length() - 1));
+            hashMap.put("fr", string.substring(string.indexOf("fr") + 2, string.length() - 1));
             return hashMap;
         }
 
@@ -171,38 +192,55 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onLog(View view) {
+        numberString = "";
         edit1 = findViewById(R.id.edit1);
         edit1.setText("log( ");
         numberString = "log( " + numberString;
     }
 
     public void onSin(View view) {
+        numberString = "";
         edit1 = findViewById(R.id.edit1);
         edit1.setText("sin( ");
         numberString = "sin( " + numberString;
     }
 
     public void onSqrt(View view) {
+        numberString = "";
         edit1 = findViewById(R.id.edit1);
         edit1.setText("sqrt( ");
         numberString = "sqrt( " + numberString;
 
     }
 
-    public void onSquare(View view) {
+    public void onFraction(View view) {
+        numberString = "";
         edit1 = findViewById(R.id.edit1);
-        edit1.setText("sqr( ");
-        numberString = "sqr( " + numberString;
+        edit1.setText("fr( ");
+        numberString = "fr( " + numberString;
 
     }
 
     /*-----------------------*/
-
+//    private static int toggleEquals = 1;
+//    private String equalsAns = "";
     public void onEquals(View view) {
+        double ans = 0;
+        edit1 = findViewById(R.id.edit1);
+        edit2 = findViewById(R.id.edit2);
+//        Log.i("Toggle Equals " + toggleEquals, "info");
+//        if (toggleEquals > 0) {
+//            toggleEquals--;
+//        }
+//        else if (toggleEquals == 0){
+//            Log.i("Number String look liks " + numberString, "debug");
+//            edit1.setText(equalsAns);
+//            edit2.setText(equalsAns);
+//            toggleEquals = 1;
+//        }
+//
         if (numberString.length() == 0)
             return;
-        edit2 = findViewById(R.id.edit2);
-        double ans = 0;
         try {
             if (switchState) {
                 HashMap<String, String> scientificMap = checkScientificFunctions(numberString);
@@ -220,10 +258,13 @@ public class MainActivity extends AppCompatActivity {
                     ans = evaluator.evaluate(scientificMap.get("sqrt"));
                     ans = Math.sqrt(ans);
                 }
-                else if (scientificMap.containsKey("sqr")) {
+                else if (scientificMap.containsKey("fr")) {
                     Log.i("In scientific state", "info");
-                    ans = evaluator.evaluate(scientificMap.get("sqr"));
-                    ans = ans * ans;
+                    ans = evaluator.evaluate(scientificMap.get("fr"));
+                    String fraction = convertToFraction(ans);
+                    edit2.findViewById(R.id.edit2);
+                    edit2.setText(fraction);
+                    return;
                 }
                 else {
                     ans = evaluator.evaluate(numberString);
@@ -232,7 +273,10 @@ public class MainActivity extends AppCompatActivity {
             } else
                 ans = evaluator.evaluate(numberString);
 
-            Log.i("Number String" + numberString  + "ans" + ans, "info");
+//            Log.i("Number String" + numberString  + "ans" + ans, "info");
+//            numberString = "" + ans;
+//            edit1.setText(numberString);
+//            equalsAns = Double.toString(ans);
             edit2.setText(Double.toString(ans));
 
         } catch (Exception e) {
@@ -254,12 +298,20 @@ public class MainActivity extends AppCompatActivity {
         GridLayout gridLayout2 = findViewById(R.id.grid_layout2);
         GridLayout gridLayout1 = findViewById(R.id.grid_layout1);
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) gridLayout1.getLayoutParams();
-
+        edit1 = findViewById(R.id.edit1);
+        edit2 = findViewById(R.id.edit2);
         if (switchState) {
             gridLayout2.setVisibility(View.VISIBLE);
             params.topMargin = 50;
             gridLayout1.setLayoutParams(params);
+            edit1.setText(null);
+            edit2.setText(null);
+            numberString = "";
+
         } else {
+            edit1.setText(null);
+            edit2.setText(null);
+            numberString = "";
             gridLayout2.setVisibility(View.GONE);
             params.topMargin = 80;
             gridLayout1.setLayoutParams(params);
