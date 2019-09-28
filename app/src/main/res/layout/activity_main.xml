@@ -197,10 +197,11 @@
             android:alignmentMode="alignMargins"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="center"
+            android:layout_gravity="left"
+        android:layout_marginLeft="22dp"
             android:columnCount="4"
             android:orientation="horizontal"
-            android:layout_marginLeft="20dp">
+            >
 
         <Button
             android:onClick="onLog"
@@ -213,8 +214,8 @@
             android:text="sin"></Button>
 
         <Button
-            android:onClick="onSqrt"
-            android:text="sqrt"></Button>
+            android:onClick="onPow"
+            android:text="pow"></Button>
 
         <Button
             android:onClick="onFraction"

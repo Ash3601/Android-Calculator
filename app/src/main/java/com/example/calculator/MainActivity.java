@@ -153,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
     private HashMap<String, String> checkScientificFunctions(String string) {
         boolean isLogFound = string.indexOf("log( ") != -1 ? true: false;
         boolean isSinFound = string.indexOf("sin( ") != -1 ? true: false;
-        boolean isSqrtFound = string.indexOf("sqrt( ") != -1 ? true: false;
+        boolean isSqrtFound = string.indexOf("pow( ") != -1 ? true: false;
         boolean isFrFound = string.indexOf("fr( ") != -1 ? true: false;
 
         if (isLogFound) {
@@ -173,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
         if (isSqrtFound) {
             Log.i("In substring of chS", "info");
             HashMap<String, String> hashMap = new HashMap<>();
-            hashMap.put("sqrt", string.substring(string.indexOf("sqrt") + 4, string.length() - 1));
+            hashMap.put("pow", string.substring(string.indexOf("pow") + 3, string.length() - 1));
             return hashMap;
         }
 
@@ -205,11 +205,11 @@ public class MainActivity extends AppCompatActivity {
         numberString = "sin( " + numberString;
     }
 
-    public void onSqrt(View view) {
+    public void onPow(View view) {
         numberString = "";
         edit1 = findViewById(R.id.edit1);
-        edit1.setText("sqrt( ");
-        numberString = "sqrt( " + numberString;
+        edit1.setText("pow( ");
+        numberString = "pow( " + numberString;
 
     }
 
@@ -222,29 +222,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /*-----------------------*/
-//    private static int toggleEquals = 1;
-//    private String equalsAns = "";
     public void onEquals(View view) {
         double ans = 0;
         edit1 = findViewById(R.id.edit1);
         edit2 = findViewById(R.id.edit2);
-//        Log.i("Toggle Equals " + toggleEquals, "info");
-//        if (toggleEquals > 0) {
-//            toggleEquals--;
-//        }
-//        else if (toggleEquals == 0){
-//            Log.i("Number String look liks " + numberString, "debug");
-//            edit1.setText(equalsAns);
-//            edit2.setText(equalsAns);
-//            toggleEquals = 1;
-//        }
-//
         if (numberString.length() == 0)
             return;
         try {
             if (switchState) {
                 HashMap<String, String> scientificMap = checkScientificFunctions(numberString);
-//            numberString = checkScientificFunctions(numberString);
                 if (scientificMap.containsKey("log")) {
                     Log.i("In scientific state", "info");
                     ans = evaluator.evaluate(scientificMap.get("log"));
@@ -253,10 +239,21 @@ public class MainActivity extends AppCompatActivity {
                     Log.i("In scientific state", "info");
                     ans = evaluator.evaluate(scientificMap.get("sin"));
                     ans = Math.sin(Math.toRadians(ans));
-                } else if (scientificMap.containsKey("sqrt")) {
+                } else if (scientificMap.containsKey("pow")) {
                     Log.i("In scientific state", "info");
-                    ans = evaluator.evaluate(scientificMap.get("sqrt"));
-                    ans = Math.sqrt(ans);
+                    String powerExpression = scientificMap.get("pow");
+                    powerExpression = powerExpression.substring(2, powerExpression.length() - 2);
+                    String[] expArr = powerExpression.split("\\..");
+                    if (expArr.length == 1) {
+                        throw new Exception("Invalid Expression");
+                    }
+                    String x = expArr[0];
+                    String y = expArr[1];
+                    Log.i("Test", "expressions");
+                    Log.i(x + "|" + y, "expressions");
+                    Double x1 = evaluator.evaluate(x);
+                    Double y1 = evaluator.evaluate(y);
+                    ans = Math.pow(x1, y1);
                 }
                 else if (scientificMap.containsKey("fr")) {
                     Log.i("In scientific state", "info");
@@ -272,11 +269,6 @@ public class MainActivity extends AppCompatActivity {
 
             } else
                 ans = evaluator.evaluate(numberString);
-
-//            Log.i("Number String" + numberString  + "ans" + ans, "info");
-//            numberString = "" + ans;
-//            edit1.setText(numberString);
-//            equalsAns = Double.toString(ans);
             edit2.setText(Double.toString(ans));
 
         } catch (Exception e) {
