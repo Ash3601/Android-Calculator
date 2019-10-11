@@ -1,14 +1,19 @@
 package com.example.calculator;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.math.BigInteger;
 import java.util.HashMap;
@@ -230,6 +235,7 @@ public class MainActivity extends AppCompatActivity {
 
     /*-----------------------*/
     public void onEquals(View view) {
+        String calculations = numberString;
         double ans = 0;
         edit1 = findViewById(R.id.edit1);
         edit2 = findViewById(R.id.edit2);
@@ -290,6 +296,9 @@ public class MainActivity extends AppCompatActivity {
 
             } else
                 ans = evaluator.evaluate(numberString);
+
+            String result = ans + "";
+            myDb.insertData(calculations, result);
             edit2.setText(Double.toString(ans));
 
         } catch (Exception e) {
@@ -331,10 +340,53 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /*Data Base Connectivity*/
+
+    // Create database helper instance
+    DatabaseHelper myDb;
+
+
+    // To display the box
+    public void showMessage(String title, String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setCancelable(true);
+        builder.setTitle(title);
+        builder.setMessage(message);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(MainActivity.this, "Closed",
+                        Toast.LENGTH_SHORT).show();            }
+        });
+        builder.show();
+    }
+
+    public void onViewHistory(View view) {
+        viewHistory();
+    }
+
+    public void viewHistory() {
+        Cursor res = myDb.getAllData();
+        if (res.getCount() == 0) {
+            // no data
+            showMessage("Data", "No data found!");
+            return;
+        }
+        StringBuffer buffer = new StringBuffer();
+        while (res.moveToNext()) {
+            buffer.append("Id: " + res.getString(0) + "\n" + " Expression: " + res.getString(1) + "\n" + " Result: " + res.getString(2) + "\n" + " Date: " + res.getString(3) + "\n");
+        }
+
+        // Show all the data
+        showMessage("History", buffer.toString());
+    }
+
+    /*-----------------------*/
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        myDb = new DatabaseHelper(this);
     }
 }

@@ -180,7 +180,9 @@
             android:text="fr"></Button>
 
         <Button
-            android:text="  "></Button>
+            android:id="@+id/btnHistory"
+            android:onClick="onViewHistory"
+            android:text="HIST"></Button>
         <Button
             android:text="  "></Button>
         <Button
@@ -192,6 +194,7 @@
 
 
     </GridLayout>
+
 
 
 </LinearLayout>
