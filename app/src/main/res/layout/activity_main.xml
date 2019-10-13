@@ -165,7 +165,6 @@
         <Button
             android:onClick="onLog"
             android:text="log">
-
         </Button>
 
         <Button
@@ -180,8 +179,19 @@
             android:onClick="onFraction"
             android:text="fr"></Button>
 
+        <Button
+            android:text="  "></Button>
+        <Button
+            android:text="  "></Button>
+        <Button
+            android:onClick="onFactorial"
+            android:text="!"></Button>
+        <Button
+            android:onClick="onComma"
+            android:text=","></Button>
 
-        </GridLayout>
+
+    </GridLayout>
 
 
 </LinearLayout>

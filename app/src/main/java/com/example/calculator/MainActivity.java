@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import java.math.BigInteger;
 import java.util.HashMap;
-import java.util.Stack;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -84,6 +83,17 @@ public class MainActivity extends AppCompatActivity {
         edit1.setText(numberString);
     }
 
+    public void onComma(View view) {
+        edit1 = findViewById(R.id.edit1);
+        numberString = numberString + ",";
+        edit1.setText(numberString);
+    }
+
+    public void onFactorial(View view) {
+        edit1 = findViewById(R.id.edit1);
+        numberString = numberString + "!";
+        edit1.setText(numberString);
+    }
 
 
     public void onClickOpeningBrace(View view) {
@@ -119,12 +129,10 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
     public void onDivide(View view) {
         edit1 = findViewById(R.id.edit1);
         numberString = numberString + " / ";
         edit1.setText(numberString);
-
     }
 
     public void onClear(View view) {
@@ -135,7 +143,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /*SCIENTIFIC CALCULATIONS*/
-
 
     public String convertToFraction(double decimal){
         int digitsAfterPoint = String.valueOf(decimal).length() - String.valueOf(decimal).indexOf('.')+1; // get the count of digits after the point // for example 0.75 has two digits
@@ -230,6 +237,20 @@ public class MainActivity extends AppCompatActivity {
             return;
         try {
             if (switchState) {
+                if (numberString.contains("!")) {
+                    if (numberString.charAt(numberString.length() - 1) == '!') {
+                        int idxOfExclamation = numberString.indexOf("!");
+                        String strToParse = numberString.substring(0, idxOfExclamation);
+                        int number = Integer.parseInt(strToParse);
+                        Log.i(strToParse, "substring");
+                        String factorial = FunctionsEvaluator.factorial(number);
+                        edit2.setText(factorial);
+                        numberString = "";
+                        return;
+                    } else {
+                        throw  new Exception("Invalid String found in Factorial");
+                    }
+                }
                 HashMap<String, String> scientificMap = checkScientificFunctions(numberString);
                 if (scientificMap.containsKey("log")) {
                     Log.i("In scientific state", "info");
@@ -243,7 +264,7 @@ public class MainActivity extends AppCompatActivity {
                     Log.i("In scientific state", "info");
                     String powerExpression = scientificMap.get("pow");
                     powerExpression = powerExpression.substring(2, powerExpression.length() - 2);
-                    String[] expArr = powerExpression.split("\\..");
+                    String[] expArr = powerExpression.split(",");
                     if (expArr.length == 1) {
                         throw new Exception("Invalid Expression");
                     }
